@@ -103,7 +103,7 @@ class ConanSqlite3(ConanFile):
         prefix={prefix}
         exec_prefix=${{prefix}}
         libdir=${{prefix}}/lib
-        toolexeclibdir=${{prefix}}/lib/
+        toolexeclibdir=${{prefix}}/lib/pkgconfig
         includedir=${{prefix}}/include
         
         Name: {name}
@@ -113,7 +113,7 @@ class ConanSqlite3(ConanFile):
         Cflags: -I${{includedir}}
         '''.format(prefix=self.package_folder, name=self.name, version=self.version, description=self.description)
 
-        tools.save('%s/lib/%s.pc'%(self.package_folder, self.name), pc_content)
+        tools.save('%s/lib/pkgconfig/%s.pc'%(self.package_folder, self.name), pc_content)
         
 
     def package_info(self):
