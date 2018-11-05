@@ -30,7 +30,7 @@ class ConanSqlite3(ConanFile):
                "enable_rtree": [True, False],
                "omit_load_extension": [True, False]
                }
-    default_options = "shared=False",\
+    default_options = "shared=True",\
                       "fPIC=True",\
                       "threadsafe=1",\
                       "enable_column_metadata=False",\
