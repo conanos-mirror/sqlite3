@@ -2,6 +2,8 @@
 # -*- coding: utf-8 -*-
 
 from conans import ConanFile, CMake, tools
+from conans.client.generators.pkg_config import PkgConfigGenerator
+from conans.model.build_info import CppInfo
 import os
 
 
@@ -96,6 +98,23 @@ class ConanSqlite3(ConanFile):
         self.copy(pattern="*.pdb", dst="lib", keep_path=False)
         self.copy(pattern="*.so", dst="lib", keep_path=False)
         self.copy(pattern="*.dylib", dst="lib", keep_path=False)
+
+        pc_content ='''
+        prefix={prefix}
+        exec_prefix=${{prefix}}
+        libdir=${{prefix}}/lib
+        toolexeclibdir=${{prefix}}/lib/
+        includedir=${{prefix}}/include
+        
+        Name: {name}
+        Description: {description}
+        Version: {version}
+        Libs: -L${{toolexeclibdir}} -lffi
+        Cflags: -I${{includedir}}
+        '''.format(prefix=self.package_folder, name=self.name, version=self.version, description=self.description)
+
+        tools.save('%s/lib/%s.pc'%(self.package_folder, self.name), pc_content)
+        
 
     def package_info(self):
         self.cpp_info.libs = ['sqlite3']
