@@ -103,13 +103,13 @@ class ConanSqlite3(ConanFile):
         prefix={prefix}
         exec_prefix=${{prefix}}
         libdir=${{prefix}}/lib
-        toolexeclibdir=${{prefix}}/lib/pkgconfig
+        toolexeclibdir=${{prefix}}/lib
         includedir=${{prefix}}/include
         
         Name: {name}
         Description: {description}
         Version: {version}
-        Libs: -L${{toolexeclibdir}} -lffi
+        Libs: -L${{toolexeclibdir}} -l{name}
         Cflags: -I${{includedir}}
         '''.format(prefix=self.package_folder, name=self.name, version=self.version, description=self.description)
 
